@@ -70,6 +70,12 @@ export default function App() {
           <Route path="users" element={<AdminUsers />} />
         </Route>
 
+        {/* Fallback aliases for admin portal to guarantee no 404 */}
+        {['admin', 'admin1', 'admin.1', 'naqla-studio-x7k'].filter(alias => alias !== ADMIN_ROUTE_SEGMENT).flatMap(alias => [
+          <Route key={`${alias}-root`} path={alias} element={<Navigate to={`/${ADMIN_ROUTE_SEGMENT}`} replace />} />,
+          <Route key={`${alias}-wildcard`} path={`${alias}/*`} element={<Navigate to={`/${ADMIN_ROUTE_SEGMENT}`} replace />} />,
+        ])}
+
         <Route path="404" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>
