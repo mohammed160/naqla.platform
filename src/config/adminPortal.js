@@ -1,5 +1,13 @@
 function normalizeAdminBase(value) {
-  const raw = String(value || '/naqla-studio-x7k').trim();
+  let raw = String(value || '/naqla-studio-x7k').trim();
+  if (raw.startsWith('http://') || raw.startsWith('https://')) {
+    try {
+      const url = new URL(raw);
+      raw = url.pathname;
+    } catch (_) {
+      raw = raw.replace(/^https?:\/\/[^/]+/, '');
+    }
+  }
   const withSlash = raw.startsWith('/') ? raw : `/${raw}`;
   return withSlash.replace(/\/+$/, '') || '/naqla-studio-x7k';
 }
