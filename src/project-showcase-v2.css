@@ -1,0 +1,241 @@
+/* V2 project performance + student showcase. Loaded last so it only refines existing design. */
+
+.project-cover-shell,
+.project-image-loading,
+.home-project-media {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #161d1f;
+}
+.project-cover-shell::before,
+.project-image-loading,
+.home-project-media-loading {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(255,255,255,.025) 20%, rgba(255,255,255,.075) 36%, rgba(255,255,255,.025) 52%);
+  background-size: 220% 100%;
+  animation: projectMediaShimmer 1.25s linear infinite;
+}
+.project-cover-shell img,
+.home-project-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity .35s ease, transform .5s ease;
+}
+.project-cover-shell.is-ready img,
+.home-project-media.is-ready img { opacity: 1; }
+.project-cover-shell.is-ready::before { opacity: 0; pointer-events: none; }
+.project-cover-placeholder { width: 100%; height: 100%; }
+@keyframes projectMediaShimmer { to { background-position-x: -220%; } }
+
+.project-detail-image-button { min-height: 180px; position: relative; }
+.project-detail-image-button .project-image-loading { min-height: 340px; }
+.project-detail-image-button.is-ready .project-image-loading { display: none; }
+.project-detail-image-button img { position: relative; z-index: 1; }
+
+/* Strong student-work section on the home page */
+.student-showcase-section {
+  position: relative;
+  overflow: hidden;
+  border-block: 1px solid rgba(84,230,212,.12);
+  background:
+    radial-gradient(circle at 12% 20%, rgba(84,230,212,.12), transparent 30%),
+    radial-gradient(circle at 88% 75%, rgba(84,230,212,.07), transparent 26%),
+    linear-gradient(180deg, rgba(16,21,22,.98), rgba(16,21,22,.96));
+}
+.student-showcase-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .2;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+}
+.student-showcase-section > .section-pad { position: relative; z-index: 1; }
+.student-showcase-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 28px;
+  margin-bottom: 34px;
+}
+.student-showcase-heading > div { max-width: 720px; }
+.student-showcase-heading h2 {
+  font-size: clamp(42px, 6vw, 74px);
+  line-height: 1;
+  margin: 11px 0 16px;
+}
+.student-showcase-heading p { color: var(--muted); line-height: 1.9; margin: 0; font-size: 17px; }
+.student-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0,1fr));
+  gap: 18px;
+  align-items: stretch;
+}
+.student-showcase-card {
+  grid-column: span 4;
+  position: relative;
+  min-height: 390px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 28px;
+  overflow: hidden;
+  background: #101516;
+  box-shadow: 0 30px 80px rgba(0,0,0,.24);
+}
+.student-showcase-card:nth-child(1),
+.student-showcase-card:nth-child(5) { grid-column: span 7; min-height: 500px; }
+.student-showcase-card:nth-child(2),
+.student-showcase-card:nth-child(6) { grid-column: span 5; min-height: 500px; }
+.student-showcase-card > a { display: block; width: 100%; height: 100%; }
+.student-showcase-card .home-project-media { min-height: inherit; }
+.student-showcase-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(84,230,212,.04);
+}
+.student-showcase-card:hover .home-project-media img { transform: scale(1.035); }
+.student-showcase-overlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 3;
+  padding: 56px 22px 22px;
+  display: grid;
+  gap: 10px;
+  background: linear-gradient(to top, rgba(16,21,22,.96), rgba(16,21,22,.68) 58%, transparent);
+}
+.student-showcase-overlay > div { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.student-showcase-overlay > div span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(84,230,212,.13);
+  border: 1px solid rgba(84,230,212,.18);
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 900;
+}
+.student-showcase-overlay small { color: #d9e3e2; }
+.student-showcase-overlay h3 { margin: 0; font-size: clamp(20px, 2vw, 31px); line-height: 1.15; }
+.student-showcase-overlay b { color: var(--green); font-size: 12px; }
+.student-showcase-cta {
+  margin-top: 26px;
+  padding: 22px 24px;
+  border-radius: 22px;
+  border: 1px solid rgba(84,230,212,.18);
+  background: linear-gradient(120deg, rgba(84,230,212,.11), rgba(255,255,255,.02));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.student-showcase-cta > div { display: grid; gap: 5px; }
+.student-showcase-cta strong { font-size: 20px; }
+.student-showcase-cta span { color: var(--muted); line-height: 1.7; }
+
+@media (max-width: 1000px) {
+  .student-showcase-card,
+  .student-showcase-card:nth-child(1),
+  .student-showcase-card:nth-child(2),
+  .student-showcase-card:nth-child(5),
+  .student-showcase-card:nth-child(6) { grid-column: span 6; min-height: 390px; }
+}
+
+@media (max-width: 760px) {
+  /* Force the mobile navigation to behave as a true floating drawer. */
+  .site-header { overflow: visible !important; isolation: isolate; }
+  .site-header nav,
+  .site-header nav.open {
+    position: fixed !important;
+    top: 74px !important;
+    right: 12px !important;
+    left: 12px !important;
+    bottom: auto !important;
+    inset: 74px 12px auto 12px !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: calc(100dvh - 92px) !important;
+    margin: 0 !important;
+    padding: 12px !important;
+    overflow-y: auto !important;
+    grid-template-columns: 1fr !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 5px !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(84,230,212,.18) !important;
+    background: rgba(16,21,22,.985) !important;
+    box-shadow: 0 24px 70px rgba(0,0,0,.55) !important;
+    backdrop-filter: blur(22px) !important;
+    z-index: 9999 !important;
+  }
+  .site-header nav { display: none !important; }
+  .site-header nav.open { display: flex !important; }
+  .site-header nav a {
+    display: flex !important;
+    align-items: center !important;
+    min-height: 46px !important;
+    padding: 11px 13px !important;
+    border-radius: 12px !important;
+    font-size: 15px !important;
+    background: transparent !important;
+  }
+  .site-header nav a:hover,
+  .site-header nav a.active { background: rgba(84,230,212,.08) !important; }
+  .site-announcement { position: relative; z-index: 15; }
+
+  .student-showcase-heading { align-items: stretch; flex-direction: column; margin-bottom: 24px; }
+  .student-showcase-heading h2 { font-size: clamp(30px, 9vw, 44px); }
+  .student-showcase-heading p { font-size: 14.5px; line-height: 1.65; }
+  .student-showcase-heading .btn { width: 100%; min-height: 48px; }
+  .student-showcase-grid { grid-template-columns: 1fr; gap: 14px; }
+  .student-showcase-card,
+  .student-showcase-card:nth-child(1),
+  .student-showcase-card:nth-child(2),
+  .student-showcase-card:nth-child(5),
+  .student-showcase-card:nth-child(6) {
+    grid-column: auto;
+    min-height: min(92vw, 360px);
+    border-radius: 20px;
+  }
+  .student-showcase-overlay { padding: 40px 16px 16px; }
+  .student-showcase-overlay h3 { font-size: 20px; }
+  .student-showcase-overlay b {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    width: fit-content;
+    padding: 6px 12px;
+    border-radius: 99px;
+    background: rgba(84,230,212, 0.12);
+    border: 1px solid rgba(84,230,212, 0.28);
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .student-showcase-cta { flex-direction: column; align-items: stretch; padding: 20px 16px; border-radius: 20px; gap: 14px; }
+  .student-showcase-cta .btn { width: 100%; min-height: 48px; }
+
+  .project-detail-image-button .project-image-loading { min-height: 58vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-cover-shell::before,
+  .project-image-loading,
+  .home-project-media-loading { animation: none; }
+  .student-showcase-card { transform: none !important; }
+}

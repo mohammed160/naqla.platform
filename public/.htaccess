@@ -1,0 +1,38 @@
+# Naqla on Apache / LiteSpeed (Hostinger). Put this file next to index.html.
+
+RewriteEngine On
+RewriteBase /
+
+# Force HTTPS (skipped automatically on http://localhost)
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:[0-9]+)?$ [NC]
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Real files and folders are served as-is
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# A missing file under /assets is a real 404 (never answer it with index.html)
+RewriteRule ^assets/ - [R=404,L]
+
+# Every app route (/faq, /dashboard, ...) is handled by React
+RewriteRule ^ index.html [L]
+
+<IfModule mod_headers.c>
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+
+  # index.html must always be fresh, or visitors keep an old page after an update
+  <FilesMatch "^(index\.html)?$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </FilesMatch>
+
+  # JS, CSS and fonts are built with a hash in their name, so they can be cached for a year.
+  # Images are left out on purpose: some keep a fixed name (logo, covers).
+  <FilesMatch "\.(js|css|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>

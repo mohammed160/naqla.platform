@@ -1,0 +1,321 @@
+/* Student-project community interactions. Loaded last so it can extend the existing design system safely. */
+
+.project-card-social-row {
+  padding: 0 20px 20px;
+}
+
+.project-social-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.project-social-actions.compact {
+  margin-top: 0;
+  gap: 7px;
+}
+
+.project-social-button,
+.project-social-stat {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.025);
+  color: var(--muted);
+  font: inherit;
+  transition: border-color .2s ease, color .2s ease, background .2s ease, transform .2s ease;
+}
+
+.project-social-button {
+  cursor: pointer;
+}
+
+.project-social-button:hover:not(:disabled) {
+  color: #fff;
+  border-color: rgba(84,230,212,.42);
+  background: rgba(84,230,212,.08);
+  transform: translateY(-1px);
+}
+
+.project-social-button:disabled {
+  opacity: .55;
+  cursor: wait;
+}
+
+.project-social-button.active {
+  color: var(--green);
+  border-color: rgba(84,230,212,.45);
+  background: rgba(84,230,212,.11);
+}
+
+.project-social-button svg,
+.project-social-stat svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+
+.project-social-actions.compact .project-social-button,
+.project-social-actions.compact .project-social-stat {
+  min-height: 35px;
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+.project-social-actions.compact .project-social-button svg,
+.project-social-actions.compact .project-social-stat svg {
+  width: 15px;
+  height: 15px;
+  flex-basis: 15px;
+}
+
+.project-social-button b,
+.project-social-stat b {
+  font-size: 13px;
+  line-height: 1;
+  color: currentColor;
+}
+
+.project-details-social {
+  margin-top: 26px;
+}
+
+.project-comments-section {
+  scroll-margin-top: 90px;
+  margin-top: 70px;
+  padding-top: 44px;
+  border-top: 1px solid var(--line);
+}
+
+.project-comments-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.project-comments-heading h2 {
+  margin: 8px 0 0;
+  font-size: clamp(30px, 5vw, 52px);
+}
+
+.project-comments-heading > b {
+  min-width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(84,230,212,.35);
+  color: var(--green);
+  background: rgba(84,230,212,.08);
+}
+
+.project-comment-form,
+.project-comments-login {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(255,255,255,.025);
+  padding: 18px;
+  margin-bottom: 22px;
+}
+
+.project-comment-form textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 112px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  line-height: 1.8;
+}
+
+.project-comment-form textarea::placeholder {
+  color: var(--muted);
+}
+
+.project-comment-form > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.project-comment-form small {
+  color: var(--muted);
+}
+
+.project-comments-login {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+
+.project-comments-login p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.project-comments-list {
+  display: grid;
+  gap: 12px;
+}
+
+.project-comment-card {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255,255,255,.018);
+}
+
+.project-comment-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(84,230,212,.1);
+  border: 1px solid rgba(84,230,212,.25);
+  color: var(--green);
+  font-weight: 900;
+}
+
+.project-comment-content {
+  min-width: 0;
+}
+
+.project-comment-meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.project-comment-meta > div {
+  min-width: 0;
+}
+
+.project-comment-meta b,
+.project-comment-meta small {
+  display: block;
+}
+
+.project-comment-meta small {
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.project-comment-meta button {
+  border: 0;
+  background: transparent;
+  color: #f29a9a;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.project-comment-content p {
+  margin: 12px 0 0;
+  color: rgba(255,255,255,.88);
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.compact-empty {
+  min-height: 130px;
+}
+
+.admin-user-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+}
+
+.table-button.danger {
+  color: #f5a0a0;
+  border-color: rgba(245,100,100,.28);
+}
+
+.table-button.danger:hover:not(:disabled) {
+  color: #fff;
+  background: rgba(245,100,100,.12);
+  border-color: rgba(245,100,100,.45);
+}
+
+@media (max-width: 760px) {
+  .project-card-social-row {
+    padding: 0 16px 16px;
+  }
+
+  .project-social-actions {
+    gap: 7px;
+    margin-top: 18px;
+  }
+
+  .project-social-button,
+  .project-social-stat {
+    min-height: 38px;
+    padding: 7px 11px;
+  }
+
+  .project-social-actions.compact {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+  }
+
+  .project-social-actions.compact .project-social-button,
+  .project-social-actions.compact .project-social-stat {
+    width: 100%;
+    padding-inline: 6px;
+  }
+
+  .project-comments-section {
+    margin-top: 48px;
+    padding-top: 32px;
+  }
+
+  .project-comments-login,
+  .project-comment-form > div {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .project-comments-login .btn,
+  .project-comment-form .btn {
+    width: 100%;
+  }
+
+  .project-comment-card {
+    grid-template-columns: 36px minmax(0, 1fr);
+    padding: 14px;
+  }
+
+  .project-comment-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .admin-user-actions {
+    min-width: 145px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

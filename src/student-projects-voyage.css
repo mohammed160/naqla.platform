@@ -1,0 +1,688 @@
+/* ==========================================================================
+   3D PERSPECTIVE STUDENT PROJECTS CAROUSEL (VOYAGE STYLE)
+   Matching User Reference Exactly on Desktop and Mobile
+   ========================================================================== */
+
+.voyage-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 3.5rem 1rem 5.5rem;
+  background: radial-gradient(circle at 50% 30%, rgba(18,26,38, 0.75) 0%, rgba(7,10,15, 0.98) 100%);
+  border-radius: 28px;
+  margin: 2rem 0;
+  border: 1px solid rgba(255,255,255, 0.07);
+  box-shadow: 0 30px 80px -20px rgba(0,0,0, 0.85);
+  user-select: none;
+}
+
+/* Ambient Gaussian Blur Background */
+.voyage-ambient-backdrop {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  transition: opacity 0.8s cubic-bezier(0.32, 1, 0.45, 1);
+}
+
+.voyage-ambient-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(80px) saturate(140%) brightness(0.24);
+  transform: scale(1.35);
+  transition: opacity 0.8s cubic-bezier(0.32, 1, 0.45, 1);
+  will-change: opacity, transform;
+}
+
+.voyage-ambient-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(10,14,22, 0.4) 0%, rgba(5,7,11, 0.9) 85%);
+  z-index: 1;
+}
+
+/* Header inside carousel */
+.voyage-header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 2.2rem;
+}
+
+.voyage-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 1.1rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #54E6D4;
+  background: rgba(84,230,212, 0.1);
+  border: 1px solid rgba(84,230,212, 0.25);
+  border-radius: 9999px;
+  margin-bottom: 0.85rem;
+}
+
+.voyage-title {
+  font-size: clamp(1.85rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.25;
+  margin: 0;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 14px rgba(0,0,0, 0.6);
+}
+
+.voyage-subtitle {
+  font-size: clamp(0.95rem, 1.4vw, 1.12rem);
+  color: rgba(220,230,245, 0.72);
+  line-height: 1.65;
+  margin: 0.6rem 0 0;
+}
+
+/* 3D Stage & Track */
+.voyage-stage-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1100px;
+  height: 450px;
+  margin: 0 auto;
+  perspective: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+}
+
+.voyage-stage-container:active {
+  cursor: grabbing;
+}
+
+.voyage-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+}
+
+/* 3D Cards */
+.voyage-card {
+  position: absolute;
+  width: min(530px, 78vw);
+  height: 380px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: none !important;
+  border: 1px solid rgba(255,255,255, 0.12);
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+  transition: border-color 0.35s ease;
+  background: #090d14;
+}
+
+.voyage-card.is-active {
+  box-shadow: 0 0 35px rgba(84,230,212, 0.12) !important;
+  border: 1.5px solid rgba(84,230,212, 0.55);
+  cursor: default;
+}
+
+.voyage-card:not(.is-active) {
+  cursor: pointer;
+}
+
+.voyage-card:not(.is-active):hover {
+  border-color: rgba(255,255,255, 0.3);
+}
+
+/* Card Cover Media */
+.voyage-card-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.voyage-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.02);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.voyage-card.is-active:hover .voyage-card-img {
+  transform: scale(1.06);
+}
+
+/* Dark Gradient Overlays (Clear, vibrant, and optimized for maximum legibility) */
+.voyage-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(6,10,16, 0.96) 0%,
+    rgba(6,10,16, 0.72) 40%,
+    rgba(6,10,16, 0.15) 68%,
+    transparent 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.voyage-card-shine {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(255,255,255, 0.12) 0%, transparent 55%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Top Meta (Tag & Sequence) */
+.voyage-card-top {
+  position: absolute;
+  top: 1.15rem;
+  left: 1.15rem;
+  right: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.voyage-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  background: rgba(10,16,26, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255, 0.16);
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #e6edf8;
+}
+
+.voyage-card-badge i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #54E6D4;
+  box-shadow: 0 0 8px #54E6D4;
+  display: inline-block;
+}
+
+.voyage-card-index {
+  font-size: 0.82rem;
+  font-weight: 800;
+  font-family: monospace;
+  color: rgba(255,255,255, 0.8);
+  padding: 0.28rem 0.65rem;
+  background: rgba(10,16,26, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255, 0.12);
+}
+
+/* Bottom Content: Title & Trainee Profile with Staggered Transition */
+.voyage-card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.25rem 1.4rem;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.45rem;
+  direction: rtl;
+}
+
+.voyage-card-title {
+  font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.3;
+  margin: 0;
+  text-align: center;
+  letter-spacing: -0.015em;
+  text-shadow: 0 2px 10px rgba(0,0,0, 0.8);
+}
+
+/* Dedicated Trainee Details Card/Panel matching reference */
+.voyage-trainee-panel {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 90%;
+  max-width: 380px;
+  gap: 0.75rem;
+  padding: 0.42rem 0.85rem;
+  background: rgba(12,17,26, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255, 0.12);
+  border-radius: 14px;
+  margin: 0.15rem auto 0;
+  direction: rtl;
+}
+
+.voyage-trainee-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  text-align: right;
+}
+
+.voyage-trainee-header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  justify-content: flex-start;
+}
+
+.voyage-trainee-name {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.voyage-verified-icon {
+  width: 14px;
+  height: 14px;
+  color: #54E6D4;
+  min-width: 14px;
+}
+
+.voyage-trainee-batch {
+  background: rgba(255,255,255, 0.12);
+  padding: 0.08rem 0.38rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  color: rgba(255,255,255, 0.85);
+  white-space: nowrap;
+}
+
+.voyage-trainee-meta {
+  font-size: 0.76rem;
+  color: #54E6D4;
+  font-weight: 700;
+  text-align: right;
+}
+
+.voyage-trainee-avatar {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #54E6D4 0%, #54E6D4 60%, #064e3b 100%);
+  color: #06180c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.95rem;
+  box-shadow: 0 0 0 2px rgba(84,230,212, 0.4);
+}
+
+.voyage-card-description {
+  font-size: 0.78rem;
+  color: rgba(220,230,245, 0.82);
+  line-height: 1.35;
+  margin: 0 auto;
+  max-width: 330px;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Action button inside active card */
+.voyage-card-action {
+  margin: 0.15rem auto 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.48rem 1.4rem;
+  background: #54E6D4;
+  color: #051308;
+  font-size: 0.84rem;
+  font-weight: 800;
+  border-radius: 9999px;
+  text-decoration: none;
+  box-shadow: none !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.2s ease;
+}
+
+.voyage-card-action:hover {
+  transform: translateY(-2px);
+  background: #2bf57e;
+  color: #030a04;
+}
+
+.voyage-card-action span {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.voyage-card-action:hover span {
+  transform: translateX(-4px);
+}
+
+/* Navigation Arrow Controls: Positioned over the side cards exactly as in reference */
+.voyage-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(18,24,34, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255, 0.16);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  box-shadow: 0 8px 24px rgba(0,0,0, 0.4);
+  opacity: 0.95;
+  pointer-events: auto;
+  transition: opacity 0.25s ease,
+              transform 0.2s ease,
+              background-color 0.2s ease,
+              border-color 0.2s ease;
+}
+
+.voyage-nav-btn.nav-prev {
+  right: 3.5%;
+}
+
+.voyage-nav-btn.nav-next {
+  left: 3.5%;
+}
+
+.voyage-nav-btn:hover {
+  background: rgba(84,230,212, 0.25);
+  border-color: rgba(84,230,212, 0.6);
+  color: #54E6D4;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.voyage-nav-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.voyage-nav-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.5;
+}
+
+/* Pagination Dots matching reference */
+.voyage-pagination {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-top: 1.75rem;
+}
+
+.voyage-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: rgba(255,255,255, 0.25);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: width 0.3s cubic-bezier(0.32, 1, 0.45, 1),
+              background-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+.voyage-dot:hover {
+  background: rgba(255,255,255, 0.5);
+}
+
+.voyage-dot.is-active {
+  width: 28px;
+  background: #54E6D4;
+  box-shadow: 0 0 12px rgba(84,230,212, 0.6);
+}
+
+/* Footer Action */
+.voyage-footer {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-top: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.voyage-gallery-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: rgba(255,255,255, 0.85);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.65rem 1.4rem;
+  background: rgba(255,255,255, 0.05);
+  border: 1px solid rgba(255,255,255, 0.14);
+  border-radius: 9999px;
+  transition: all 0.25s ease;
+}
+
+.voyage-gallery-link:hover {
+  background: rgba(255,255,255, 0.1);
+  color: #54E6D4;
+  border-color: rgba(84,230,212, 0.35);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Responsive adjustments matching reference photo on mobile devices
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .voyage-carousel-wrapper {
+    padding: 2.5rem 0.75rem 4.5rem;
+    border-radius: 22px;
+  }
+
+  .voyage-stage-container {
+    height: 440px;
+  }
+
+  .voyage-card {
+    height: 375px;
+  }
+}
+
+@media (max-width: 768px) {
+  .voyage-carousel-wrapper {
+    /* Generous bottom padding so the mobile floating dock never overlaps content */
+    padding: 2rem 0.4rem 6.5rem !important;
+    border-radius: 20px;
+    margin: 1.2rem 0;
+  }
+
+  .voyage-stage-container {
+    height: 420px;
+    max-width: 100%;
+  }
+
+  .voyage-card {
+    width: 76vw;
+    max-width: 330px;
+    height: 360px;
+    border-radius: 22px;
+  }
+
+  .voyage-card-top {
+    top: 0.85rem;
+    left: 0.85rem;
+    right: 0.85rem;
+  }
+
+  .voyage-card-badge {
+    font-size: 0.72rem;
+    padding: 0.28rem 0.68rem;
+  }
+
+  .voyage-card-index {
+    font-size: 0.78rem;
+    padding: 0.22rem 0.5rem;
+  }
+
+  .voyage-card-content {
+    padding: 0.95rem 0.85rem 0.85rem;
+    gap: 0.4rem;
+  }
+
+  .voyage-card-title {
+    font-size: 1.15rem;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .voyage-trainee-panel {
+    max-width: 275px;
+    padding: 0.35rem 0.65rem;
+    gap: 0.5rem;
+    border-radius: 10px;
+  }
+
+  .voyage-trainee-avatar {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    font-size: 0.85rem;
+  }
+
+  .voyage-trainee-name {
+    font-size: 0.82rem;
+    max-width: 125px;
+  }
+
+  .voyage-trainee-batch {
+    font-size: 0.66rem;
+    padding: 0.05rem 0.3rem;
+  }
+
+  .voyage-trainee-meta {
+    font-size: 0.7rem;
+  }
+
+  .voyage-card-description {
+    font-size: 0.72rem;
+    line-height: 1.3;
+    max-width: 275px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .voyage-card-action {
+    padding: 0.42rem 1.15rem;
+    font-size: 0.78rem;
+    margin-top: 0.1rem;
+    width: auto;
+  }
+
+  /* Navigation Arrows visible and positioned over side cards exactly like reference! */
+  .voyage-nav-btn {
+    display: flex !important;
+    opacity: 0.92;
+    pointer-events: auto;
+    width: 38px;
+    height: 38px;
+  }
+
+  .voyage-nav-btn.nav-prev {
+    right: 2%;
+  }
+
+  .voyage-nav-btn.nav-next {
+    left: 2%;
+  }
+
+  .voyage-pagination {
+    margin-top: 1.25rem;
+  }
+
+  .voyage-footer {
+    margin-top: 1.5rem;
+  }
+
+  .voyage-gallery-link {
+    font-size: 0.84rem;
+    padding: 0.5rem 1.15rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .voyage-stage-container {
+    height: 400px;
+  }
+
+  .voyage-card {
+    width: 78vw;
+    max-width: 300px;
+    height: 345px;
+    border-radius: 18px;
+  }
+
+  .voyage-card-content {
+    padding: 0.85rem 0.75rem 0.75rem;
+    gap: 0.35rem;
+  }
+
+  .voyage-card-title {
+    font-size: 1.05rem;
+  }
+
+  .voyage-trainee-name {
+    max-width: 110px;
+  }
+
+  .voyage-nav-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .voyage-nav-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}

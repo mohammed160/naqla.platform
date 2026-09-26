@@ -1,0 +1,414 @@
+.mobile-nav-layer { display: none; }
+.mobile-header-right { display: none; }
+
+@media (max-width: 760px) {
+  .site-header .desktop-nav { display: none !important; }
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    height: 66px;
+    padding-inline: 14px;
+    background: rgba(16,21,22, 0.88) !important;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mobile-header-right {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    margin-inline-start: auto;
+    z-index: 82;
+  }
+
+  .mobile-quick-btn {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    min-height: 38px;
+    padding: 0 13px;
+    border-radius: 12px;
+    border: 1px solid rgba(84,230,212, .26);
+    background: rgba(84,230,212, .09);
+    color: #f0f9f8;
+    font-size: 13px;
+    font-weight: 700;
+    transition: transform .18s ease, background .18s ease;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .mobile-quick-btn:active {
+    transform: scale(0.96);
+    background: rgba(84,230,212, .18);
+  }
+  .mobile-quick-btn svg {
+    color: var(--green);
+    flex-shrink: 0;
+  }
+
+  .mobile-menu {
+    display: inline-grid !important;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0 !important;
+    margin: 0;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: rgba(255,255,255,.04) !important;
+    position: relative;
+    z-index: 82;
+    flex: 0 0 auto;
+    cursor: pointer;
+  }
+
+  .mobile-menu span {
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    margin: 0;
+    background: #fff;
+    border-radius: 999px;
+    transition: transform .22s ease, opacity .18s ease, top .22s ease;
+  }
+  .mobile-menu span:nth-child(1) { top: 12px; }
+  .mobile-menu span:nth-child(2) { top: 19px; }
+  .mobile-menu span:nth-child(3) { top: 26px; }
+  .mobile-menu.is-open span:nth-child(1) { top: 19px; transform: rotate(45deg); }
+  .mobile-menu.is-open span:nth-child(2) { opacity: 0; }
+  .mobile-menu.is-open span:nth-child(3) { top: 19px; transform: rotate(-45deg); }
+
+  .mobile-nav-layer {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    pointer-events: none;
+    visibility: hidden;
+  }
+  .mobile-nav-layer.open {
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  .mobile-nav-backdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: rgba(0,0,0,.64);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: opacity .24s ease;
+  }
+  .mobile-nav-layer.open .mobile-nav-backdrop { opacity: 1; }
+
+  .mobile-nav-drawer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: min(86vw, 360px);
+    height: 100dvh;
+    padding: max(18px, env(safe-area-inset-top)) 18px max(18px, env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background: linear-gradient(180deg, #071f13 0%, #03120a 85%);
+    border-left: 1px solid rgba(84,230,212, .16);
+    box-shadow: -24px 0 80px rgba(0,0,0,.55);
+    transform: translateX(104%);
+    transition: transform .28s cubic-bezier(.22,1,.36,1);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .mobile-nav-layer.open .mobile-nav-drawer { transform: translateX(0); }
+
+  .mobile-nav-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .mobile-nav-head .brand { min-width: 0; }
+  .mobile-nav-head .brand > span {
+    display: block !important;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 800;
+  }
+  .mobile-nav-close {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.05);
+    color: white;
+    font-size: 24px;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    cursor: pointer;
+  }
+  .mobile-nav-close:active {
+    background: rgba(255,255,255,.1);
+  }
+
+  .mobile-nav-links {
+    display: grid !important;
+    position: static !important;
+    inset: auto !important;
+    padding: 0 !important;
+    margin: 0;
+    gap: 7px;
+    background: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+  .mobile-nav-links a {
+    min-height: 48px;
+    width: 100%;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border: 1px solid rgba(255,255,255,.04);
+    border-radius: 13px;
+    background: rgba(255,255,255,.02);
+    color: #e6eded;
+    text-align: right;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all .18s ease;
+  }
+  .mobile-nav-links a:hover,
+  .mobile-nav-links a:active {
+    border-color: rgba(84,230,212,.24);
+    background: rgba(84,230,212,.08);
+    color: var(--green);
+  }
+  .mobile-nav-links a b { color: var(--green); font-size: 15px; }
+
+  .mobile-nav-actions {
+    display: grid;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .mobile-nav-actions .btn {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .site-header .header-actions {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-nav-layer { display: none !important; }
+  .mobile-header-right { display: none !important; }
+  .mobile-floating-dock-wrapper { display: none !important; }
+}
+
+/* =========================================================
+   Trendy Mobile Floating Glass Dock (Dynamic Island Dock)
+   Strictly Mobile Only (<= 768px) - Desktop Remains 100% Intact
+   ========================================================= */
+@media (max-width: 768px) {
+  .mobile-floating-dock-wrapper {
+    display: flex !important;
+    position: fixed;
+    bottom: max(14px, env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000 !important;
+    width: min(calc(100% - 24px), 410px);
+    pointer-events: auto !important;
+    justify-content: center;
+  }
+}
+
+/* Laser aura behind dock */
+.dock-laser-aura {
+  position: absolute;
+  inset: -10px 4px;
+  background: radial-gradient(ellipse at center, rgba(84,230,212, 0.42) 0%, rgba(6,182,212, 0.2) 45%, transparent 72%);
+  filter: blur(20px);
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: -1;
+  animation: dockAuraPulse 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes dockAuraPulse {
+  0% { opacity: 0.55; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1.06); filter: blur(24px); }
+}
+
+.mobile-floating-dock {
+  pointer-events: auto !important;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  gap: 4px;
+  padding: 8px 8px;
+  background: rgba(16,21,22, 0.88);
+  backdrop-filter: blur(32px) saturate(210%);
+  -webkit-backdrop-filter: blur(32px) saturate(210%);
+  border: 1px solid rgba(84,230,212, 0.38);
+  box-shadow: 
+    0 20px 55px rgba(0,0,0, 0.75),
+    0 0 28px rgba(84,230,212, 0.22),
+    inset 0 1px 1px rgba(255,255,255, 0.22);
+  border-radius: 999px;
+}
+
+.dock-tab-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 8px 4px 6px;
+  border: 0;
+  background: transparent;
+  outline: none;
+  border-radius: 999px;
+  color: #a4beaf;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 700;
+  transition: color 0.22s ease, transform 0.18s ease;
+  user-select: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  width: 100%;
+}
+
+.dock-tab-btn:active {
+  transform: scale(0.86);
+}
+
+.dock-tab-btn.active {
+  color: #fff;
+}
+
+.dock-active-pill {
+  position: absolute;
+  inset: 2px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(84,230,212, 0.26), rgba(6,182,212, 0.12));
+  border: 1px solid rgba(84,230,212, 0.55);
+  box-shadow: 0 0 16px rgba(84,230,212, 0.35), inset 0 0 10px rgba(84,230,212, 0.18);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dock-icon-box {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  transition: transform 0.22s ease;
+}
+
+.dock-tab-btn.active .dock-icon-box {
+  color: #54E6D4;
+  transform: translateY(-2px) scale(1.15);
+  filter: drop-shadow(0 0 10px #54E6D4) drop-shadow(0 0 20px rgba(84,230,212, 0.6));
+}
+
+.dock-label {
+  position: relative;
+  z-index: 1;
+  font-size: 10.5px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.dock-tab-btn.active .dock-label {
+  color: #ffffff;
+  font-weight: 900;
+  text-shadow: 0 0 10px rgba(84,230,212, 0.6);
+}
+
+.dock-badge {
+  position: absolute;
+  top: -9px;
+  right: -6px;
+  background: linear-gradient(135deg, #54E6D4, #2aa99a);
+  color: #021a0c;
+  font-size: 8px;
+  font-weight: 900;
+  padding: 1.5px 5.5px;
+  border-radius: 99px;
+  line-height: 1.2;
+  box-shadow: 0 0 12px rgba(84,230,212, 0.9);
+  letter-spacing: 0.5px;
+  z-index: 5;
+  animation: proBadgePulse 2.2s ease-in-out infinite;
+}
+
+@keyframes proBadgePulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 8px rgba(84,230,212, 0.6); }
+  50% { transform: scale(1.15); box-shadow: 0 0 16px rgba(84,230,212, 1); }
+}
+
+@media (max-width: 768px) {
+  /* Extra bottom padding to ensure page footer is not blocked by floating dock */
+  .public-shell {
+    padding-bottom: max(76px, calc(66px + env(safe-area-inset-bottom)));
+  }
+
+  /* Toast & Notification alerts floating directly ABOVE the mobile dock */
+  .toast {
+    position: fixed !important;
+    left: 16px !important;
+    right: 16px !important;
+    bottom: calc(var(--mobile-dock-height, 68px) + env(safe-area-inset-bottom, 0px) + 18px) !important;
+    min-width: 0 !important;
+    max-width: 480px !important;
+    margin: 0 auto !important;
+    z-index: 2500 !important;
+    pointer-events: auto !important;
+    border: 1px solid rgba(84,230,212, 0.35) !important;
+    background: rgba(16,21,22, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 16px 40px rgba(0,0,0, 0.75), 0 0 24px rgba(84,230,212, 0.25) !important;
+    animation: toastDockElevate 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  }
+}
+
+@keyframes toastDockElevate {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
