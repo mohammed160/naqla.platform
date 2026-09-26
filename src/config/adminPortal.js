@@ -1,5 +1,5 @@
 function normalizeAdminBase(value) {
-  let raw = String(value || '/naqla-studio-x7k').trim();
+  let raw = String(value || '/admin.1').trim();
   if (raw.startsWith('http://') || raw.startsWith('https://')) {
     try {
       const url = new URL(raw);
@@ -9,7 +9,7 @@ function normalizeAdminBase(value) {
     }
   }
   const withSlash = raw.startsWith('/') ? raw : `/${raw}`;
-  return withSlash.replace(/\/+$/, '') || '/naqla-studio-x7k';
+  return withSlash.replace(/\/+$/, '') || '/admin.1';
 }
 
 export const ADMIN_BASE = normalizeAdminBase(import.meta.env.VITE_ADMIN_PORTAL_PATH);

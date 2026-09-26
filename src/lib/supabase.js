@@ -1,11 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
 
 const REMEMBER_ME_KEY = 'naqla_remember_me';
-const supabaseUrl = String(import.meta.env.VITE_SUPABASE_URL || '').trim();
+const supabaseUrl = String(
+  import.meta.env.VITE_SUPABASE_URL
+  || 'https://hyxglbrcwbuxgnhfadjk.supabase.co'
+).trim();
 const supabasePublishableKey = String(
   import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
   || import.meta.env.VITE_SUPABASE_ANON_KEY
-  || '',
+  || 'sb_publishable_MAnwenE0Rz57nnfVx5vRHQ_C4ABMB68'
 ).trim();
 
 function hasWindowStorage() {
